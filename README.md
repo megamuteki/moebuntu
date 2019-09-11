@@ -5,12 +5,16 @@ This is moebuntu Icons and Themes installer for Linux mint Tara or Ubuntu 18.04 
 
 ###  Install（インストール）
 $ git clone https://github.com/megamuteki/moebuntu.git
+
 $ cd moebuntu
+
 $ sudo bash INSTALL.sh
 
 ###  Unnstall（アンインストール）
 $ git clone https://github.com/megamuteki/moebuntu.git
+
 $ cd moebuntu
+
 $ sudo bash UNINSTALL.sh
 
 Absolutely No warrantly
