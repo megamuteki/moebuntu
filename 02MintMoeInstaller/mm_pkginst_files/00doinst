@@ -1,0 +1,42 @@
+#!/bin/bash
+
+datadir=$(cd $(dirname "$0") && pwd)
+. ${datadir}/00common.fnc
+
+echo "パスワードを入力してください。"
+echo "（画面には何も表示されませんが、セキュリティ上の仕様ですので問題ありません。）"
+sudo true || exit 1
+
+touch /tmp/mm_pkginst.log
+_log "処理を開始します。"
+echo
+
+in_list=$( echo "$1" | awk -F"|" '{print $1}' | sed -e 's/^\s*//g' | sed -e 's/\s*$//g')
+out_list=$(echo "$1" | awk -F"|" '{print $2}' | sed -e 's/^\s*//g' | sed -e 's/\s*$//g')
+
+
+if [ $(expr $(date +%s) - $(stat -c %Y /var/cache/apt/)) -gt 86400 ] ; then
+	_update
+fi
+
+# 処理を実行
+if [ ! "${in_list}" == "" ] ; then
+	for i in ${in_list} ; do
+		${datadir}/${i} -i
+	done
+fi
+
+
+if [ ! "${out_list}" == "" ] ; then
+	for i in ${out_list} ; do
+		${datadir}/${i} -p
+	done
+	_clean
+fi
+
+_tmppkg_uninst
+
+_log "処理が完了しました。"
+
+echo "キーを押すとウィンドウを閉じ、ログファイルと必要なアプリを開きます。"
+read ans

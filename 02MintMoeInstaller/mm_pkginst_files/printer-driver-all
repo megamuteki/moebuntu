@@ -1,0 +1,26 @@
+#!/bin/bash
+
+pkgs="printer-driver-all"
+ppa=""
+
+datadir=$(cd $(dirname "$0") && pwd)
+
+. ${datadir}/00common.fnc
+
+# Check
+if [ "$1" == "-c" ] ; then
+	if [ $(_check ${pkgs}) == "n" ] ; then
+		echo FALSE
+	else
+		echo TRUE
+	fi
+	
+# Install
+elif [ "$1" == "-i" ] ; then
+	_install ${pkgs}
+	
+# Purge
+elif [ "$1" == "-p" ] ; then
+	_purge ${pkgs}
+	
+fi

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+datadir=$(cd $(dirname "$0") && pwd)
+
+. ${datadir}/00common.fnc
+	
+
+# Check
+out=$(cat ~/.profile | grep "export QT_QPA_PLATFORMTHEME=gtk2" | wc -l)
+str="export QT_QPA_PLATFORMTHEME=gtk2"
+
+
+if [ "$1" == "-c" ] ; then
+	if [ $out -gt 0 ]; then
+		echo TRUE
+	else
+		echo FALSE
+	fi
+	
+# Install
+elif [ "$1" == "-i" ] ; then
+
+	#qt5-style-pluginsのインストール確認
+	if [ $(dpkg-query -W -f='${Status}' qt5-style-plugins  2>/dev/null | grep -c "ok installed") -eq 1 ];
+	then
+		echo "qt5-style-pluginsは、インストールされています。"
+
+	else
+		echo "qt5-style-pluginsを、インストールします"
+		sudo apt install qt5-style-plugins -y
+		_log "qt5-style-pluginsのインストールに成功しました。"
+	fi
+	echo "export QT_QPA_PLATFORMTHEME=gtk2" >> ~/.profile 
+
+	_log "Qt5アプリの萌え化に成功しました。"
+
+		
+# Purge
+elif [ "$1" == "-p" ] ; then
+	cp ~/.profile  ~/.profile.bk
+	sudo apt remove qt5-style-plugins -y
+	sed -i -e 's/export QT_QPA_PLATFORMTHEME=gtk2//g' ~/.profile 
+	_log "Qt5アプリの萌え化を取り消しました。"
+
+fi
