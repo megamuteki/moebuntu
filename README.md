@@ -8,13 +8,13 @@ $ git clone https://github.com/megamuteki/moebuntu.git
 
 $ cd moebuntu
 
-$ sudo bash INSTALL.sh
+$ bash INSTALL.sh
 
 ###  Unnstall（アンインストール）
 $ git clone https://github.com/megamuteki/moebuntu.git
 
 $ cd moebuntu
 
-$ sudo bash UNINSTALL.sh
+$ bash UNINSTALL.sh
 
 Absolutely No warrantly
