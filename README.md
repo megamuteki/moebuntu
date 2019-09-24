@@ -6,9 +6,7 @@ This is moebuntu Icons and Themes installer for Linux mint Tara or Ubuntu 18.04 
 ###  SetUp（セットアップを含めて行いたい場合）
 $ git clone https://github.com/megamuteki/moebuntu.git
 
-$ cd ./moebuntu/MintMoeInstaller
-
-$ sudo chmod +x mintmoeinstall.desktop
+$ cd ./moebuntu/MintMoeInstaller && sudo chmod +x * && cd mm_pkginst_files  &&  sudo chmod +x *
 
 デスクトップランチャーから起動して、
 操作できます。
