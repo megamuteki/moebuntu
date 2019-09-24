@@ -1,0 +1,58 @@
+#!/bin/bash
+
+datadir=$(cd $(dirname "$0") && pwd)
+
+. ${datadir}/00common.fnc
+	
+
+# Check
+path1=/usr/share/themes/MoeOrangeShell2
+path2=/usr/share/themes/MoePinkShell2
+path3=/usr/share/themes/MoePurpleShell2
+path4=/usr/share/themes/MoeRedShell2
+path5=/usr/share/themes/MoeYellowShell2
+
+if [ "$1" == "-c" ] ; then
+	if [ -d $path1 ] && [ -d $path2 ] && [ -d $path3 ] && [ -d $path4 ] && [ -d $path5 ]  ; then
+		echo TRUE
+	else
+		echo FALSE
+	fi
+	
+# Install
+elif [ "$1" == "-i" ] ; then
+
+	#GITのインストール確認
+	if [ $(dpkg-query -W -f='${Status}' git  2>/dev/null | grep -c "ok installed") -eq 1 ];
+	then
+		echo "gitは、インストールされています。"
+
+	else
+		echo "gitを、インストールします"
+		sudo apt install git -y
+	fi
+ 
+	git clone https://github.com/megamuteki/moebuntu.git
+	_log "MoeBuntuThemeのダウンロードに成功しました。"
+	cd moebuntu
+	
+	dir=$(pwd)
+	sudo tar xf $dir/shells/MoeOrangeShell2.tar.xz -C /usr/share/themes
+	sudo tar xf $dir/shells/MoePinkShell2.tar.xz -C /usr/share/themes
+	sudo tar xf $dir/shells/MoePurpleShell2.tar.xz -C /usr/share/themes
+	sudo tar xf $dir/shells/MoeRedShell2.tar.xz -C /usr/share/themes
+	sudo tar xf $dir/shells/MoeYellowShell2.tar.xz -C /usr/share/themes
+	rm -rf $dir 
+	_log "MoeBuntuShellsのインストールに成功しました。"
+
+		
+# Purge
+elif [ "$1" == "-p" ] ; then
+	sudo rm -rf /usr/share/themes/MoeOrangeShell2
+	sudo rm -rf /usr/share/themes/MoePinkShell2
+	sudo rm -rf /usr/share/themes/MoePurpleShell2
+	sudo rm -rf /usr/share/themes/MoeRedShell2
+	sudo rm -rf /usr/share/themes/MoeYellowShell2
+	_log "MoeBuntuShellsのアンインストールに成功しました。"
+
+fi

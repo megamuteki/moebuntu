@@ -1,0 +1,46 @@
+#!/bin/bash
+
+datadir=$(cd $(dirname "$0") && pwd)
+
+. ${datadir}/00common.fnc
+	
+
+# Check
+path1=/usr/share/icons/MoePinkIcons
+
+if [ "$1" == "-c" ] ; then
+	if [ -d $path1 ] ; then
+		echo TRUE
+	else
+		echo FALSE
+	fi
+	
+# Install
+elif [ "$1" == "-i" ] ; then
+
+	#GITのインストール確認
+	if [ $(dpkg-query -W -f='${Status}' git  2>/dev/null | grep -c "ok installed") -eq 1 ];
+	then
+		echo "gitは、インストールされています。"
+
+	else
+		echo "gitを、インストールします"
+		sudo apt install git -y
+	fi
+ 
+	git clone https://github.com/megamuteki/moebuntu.git
+	_log "MoeBuntuPinkIconsのダウンロードに成功しました。"
+	cd moebuntu
+	
+	dir=$(pwd)
+	sudo tar xf  $dir/icons/MoePinkIcons_181013.tar.xz -C /usr/share/icons
+	rm -rf $dir 
+	_log "MoeBuntuPinkIconsのインストールに成功しました。"
+
+		
+# Purge
+elif [ "$1" == "-p" ] ; then
+	sudo rm -rRf /usr/share/icons/MoePinkIcons
+	_log "MoeBuntuPinkIconsのアンインストールに成功しました。"
+
+fi

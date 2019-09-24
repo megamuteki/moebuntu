@@ -1,0 +1,39 @@
+#!/bin/bash
+
+datadir=$(cd $(dirname "$0") && pwd)
+
+. ${datadir}/00common.fnc
+	
+
+# Check
+iconck=$(xfconf-query -c xsettings -p /Net/IconThemeName)
+themeck=$(xfconf-query -c xsettings -p /Net/ThemeName)
+wmck=$(xfconf-query -c xfwm4 -p /general/theme)
+str1="MoePinkIcons"
+str2="Moe-Pink13"
+str3="Moe-Pink13"
+
+
+if [ "$1" == "-c" ] ; then
+	if [ "$iconck" = "$str1"  ]  &&  [ "$themeck" = "$str2"  ]  &&  [ "$wmck" = "$str3"  ]; then
+		echo TRUE
+	else
+		echo FALSE
+	fi
+	
+# Install
+elif [ "$1" == "-i" ] ; then
+	xfconf-query -c xsettings -p /Net/IconThemeName -s MoePinkIcons
+	xfconf-query -c xsettings -p /Net/ThemeName -s Moe-Pink13
+	xfconf-query -c xfwm4 -p /general/theme -s Moe-Pink13
+	_log "MoeBuntuPinkIcons&Themesの設定変更に成功しました。"
+
+		
+# Purge
+elif [ "$1" == "-p" ] ; then
+	xfconf-query -c xsettings -p /Net/IconThemeName -s Mint-X
+	xfconf-query -c xsettings -p /Net/ThemeName -s Mint-X
+	xfconf-query -c xfwm4 -p /general/theme -s Mint-X
+	_log "MoeBuntuPinkIcons＆Themesの設定変更に成功しました。"
+
+fi
