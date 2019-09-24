@@ -24,13 +24,13 @@ moebuntu-shells
 ---
 MoebuntuXFCE 設定
 小
-Script
+Conf
 MoeBuntuのPinkIconsとPinkThemeを設定します。
 moebuntu-xfcesetting
 ---
 MoebuntuQT5アプリの萌化設定
 小
-Script
+Conf
 MoeBuntuのQT5アプリの萌化設定を設定します。
 moebuntu-qt5
 ---
